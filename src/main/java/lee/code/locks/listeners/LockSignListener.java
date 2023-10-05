@@ -18,6 +18,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.DoubleChestInventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -71,7 +73,7 @@ public class LockSignListener implements Listener {
     final TileState state = (TileState) block.getState();
     final PersistentDataContainer signContainer = state.getPersistentDataContainer();
     final NamespacedKey lockOwner = new NamespacedKey(locks, "sign-lock-owner");
-    final NamespacedKey trusted = new NamespacedKey(locks, "sign-lock-owner");
+    final NamespacedKey trusted = new NamespacedKey(locks, "sign-lock-trusted");
 
     signContainer.set(lockOwner, PersistentDataType.STRING, playerID.toString());
     signContainer.set(trusted, PersistentDataType.STRING, "");
@@ -94,6 +96,7 @@ public class LockSignListener implements Listener {
         player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_SIGN_NOT_OWNER_BREAK.getComponent(null)));
         return;
       }
+      if (!blockHasSign(block)) return;
       block.getWorld().playSound(block.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
       player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.LOCK_SIGN_SIGN_BREAK_SUCCESS.getComponent(null)));
     } else if (block.getState().getBlockData() instanceof WallSign) {
@@ -149,6 +152,17 @@ public class LockSignListener implements Listener {
     }
   }
 
+  @EventHandler
+  public void onHopperTakeLockedItemEvent(InventoryMoveItemEvent e) {
+    if (e.getSource().getLocation() != null) {
+      final Block block = e.getSource().getLocation().getBlock();
+      if (locks.getData().getSupportedSignBlocks().contains(block.getType())) {
+        final Sign lockSign = getLockSign(block);
+        if (lockSign != null) e.setCancelled(true);
+      }
+    }
+  }
+
   private UUID getLockOwner(Sign sign) {
     final PersistentDataContainer container = sign.getPersistentDataContainer();
     final NamespacedKey key = new NamespacedKey(locks, "sign-lock-owner");
@@ -200,5 +214,11 @@ public class LockSignListener implements Listener {
       }
     }
     return null;
+  }
+
+  private boolean blockHasSign(Block block) {
+    final BlockFace[] faces = new BlockFace[]{BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST};
+    for (BlockFace face : faces) if (block.getRelative(face).getState().getBlockData() instanceof WallSign) return true;
+    return false;
   }
 }
