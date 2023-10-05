@@ -19,6 +19,9 @@ public enum Lang {
   ERROR_SIGN_BLOCK_NOT_SUPPORTED("&cThe block &3{0} &cis not a supported block you can lock."),
   ERROR_SIGN_BLOCK_HAS_LOCK("&cThat block already has a lock sign on it."),
   ERROR_SIGN_NOT_OWNER_BREAK("&cOnly the owner of the lock can break this."),
+  ERROR_NO_PERMISSION("&cYou do not have permission for this."),
+  ERROR_ONE_COMMAND_AT_A_TIME("&cYou're currently processing another command, please wait for it to finish."),
+  ERROR_NOT_CONSOLE_COMMAND("&cThis command does not work in console."),
   ;
   @Getter
   private final String string;

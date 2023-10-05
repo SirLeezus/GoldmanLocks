@@ -9,4 +9,4 @@ commands:
   lock:
     description: Maim lock command.
     permission: locks.command.lock
-    usage: "/lock &f<options>"
+    usage: "/lock"

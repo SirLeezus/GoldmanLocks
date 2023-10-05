@@ -1,0 +1,15 @@
+lock {
+  add {
+    player brigadier:string single_word;
+  }
+  remove {
+    player brigadier:string single_word;
+  }
+  list {
+    page brigadier:integer;
+  }
+  signhelp;
+  admin {
+    bypass;
+  }
+}
