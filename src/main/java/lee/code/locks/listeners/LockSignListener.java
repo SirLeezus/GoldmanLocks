@@ -5,8 +5,11 @@ import lee.code.locks.Locks;
 import lee.code.locks.lang.Lang;
 import lee.code.locks.utils.CoreUtil;
 import lee.code.locks.utils.SignUtil;
+import lee.code.playerdata.PlayerDataAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -125,7 +128,18 @@ public class LockSignListener implements Listener {
       final UUID ownerID = getLockOwner(sign);
       if (ownerID == null) return;
       e.setCancelled(true);
-      //TODO send lock info message
+      final String trustedPlayers = getTrustedPlayers(sign);
+      if (trustedPlayers == null) return;
+      Bukkit.getAsyncScheduler().runNow(locks, scheduledTask -> {
+        final List<Component> lines = new ArrayList<>();
+        lines.add(Lang.LOCK_INFO_TITLE.getComponent(null));
+        lines.add(Component.text(""));
+        lines.add(Lang.LOCK_INFO_OWNER.getComponent(new String[]{ColorAPI.getNameColor(ownerID, PlayerDataAPI.getName(ownerID))}));
+        lines.add(Lang.LOCK_INFO_TRUSTED.getComponent(new String[]{createTrustedString(trustedPlayers)}));
+        lines.add(Component.text(""));
+        lines.add(Lang.LOCK_INFO_FOOTER.getComponent(null));
+        for (Component line : lines) player.sendMessage(line);
+      });
     } else if (locks.getData().getSupportedSignBlocks().contains(block.getType())) {
       final Sign sign = getLockSign(block);
       if (sign == null) return;
@@ -169,6 +183,22 @@ public class LockSignListener implements Listener {
     final String owner = container.get(key, PersistentDataType.STRING);
     if (owner != null) return UUID.fromString(owner);
     else return null;
+  }
+
+  private String createTrustedString(String trustedPlayers) {
+    if (trustedPlayers.isEmpty()) return trustedPlayers;
+    final List<String> trusted = new ArrayList<>();
+    for (String idString : trustedPlayers.split(",")) {
+      final UUID targetID = UUID.fromString(idString);
+      trusted.add(ColorAPI.getNameColor(targetID, PlayerDataAPI.getName(targetID)));
+    }
+    return StringUtils.join(trusted, ",");
+  }
+
+  private String getTrustedPlayers(Sign sign) {
+    final PersistentDataContainer container = sign.getPersistentDataContainer();
+    final NamespacedKey key = new NamespacedKey(locks, "sign-lock-trusted");
+    return container.get(key, PersistentDataType.STRING);
   }
 
   private Sign getLockSign(Block block) {

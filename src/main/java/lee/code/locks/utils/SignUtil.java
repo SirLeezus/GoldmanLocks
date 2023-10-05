@@ -28,7 +28,7 @@ public class SignUtil {
   public static void addTrusted(Locks locks, Sign sign, UUID trusting) {
     final PersistentDataContainer signContainer = sign.getPersistentDataContainer();
     String trusted = getLockTrusted(locks, sign);
-    if (trusted != null) trusted = trusted + "," + trusting;
+    if (!trusted.isEmpty()) trusted = trusted + "," + trusting;
     else trusted = trusting.toString();
     final NamespacedKey trustedKey = new NamespacedKey(locks, "sign-lock-trusted");
     signContainer.set(trustedKey, PersistentDataType.STRING, trusted);
