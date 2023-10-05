@@ -6,6 +6,8 @@ import org.bukkit.block.Sign;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class SignUtil {
@@ -31,5 +33,12 @@ public class SignUtil {
     final NamespacedKey trustedKey = new NamespacedKey(locks, "sign-lock-trusted");
     signContainer.set(trustedKey, PersistentDataType.STRING, trusted);
     sign.update(true, false);
+  }
+
+  public static boolean isTrusted(Locks locks, Sign sign, UUID targetID) {
+    final String trusted = getLockTrusted(locks, sign);
+    if (trusted == null) return false;
+    final List<String> trustedList = new ArrayList<>(List.of(trusted.split(",")));
+    return trustedList.contains(targetID.toString());
   }
 }

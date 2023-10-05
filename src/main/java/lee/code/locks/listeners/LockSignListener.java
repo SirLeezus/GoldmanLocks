@@ -4,6 +4,7 @@ import lee.code.colors.ColorAPI;
 import lee.code.locks.Locks;
 import lee.code.locks.lang.Lang;
 import lee.code.locks.utils.CoreUtil;
+import lee.code.locks.utils.SignUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Location;
@@ -130,10 +131,10 @@ public class LockSignListener implements Listener {
       if (sign == null) return;
       final UUID ownerID = getLockOwner(sign);
       if (ownerID == null) return;
-      if (!ownerID.equals(playerID)) {
-        e.setCancelled(true);
-        player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_SIGN_NOT_OWNER_OPEN.getComponent(null)));
-      }
+      if (ownerID.equals(playerID)) return;
+      if (SignUtil.isTrusted(locks, sign, playerID)) return;
+      e.setCancelled(true);
+      player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_SIGN_NOT_OWNER_OPEN.getComponent(null)));
     }
   }
 
