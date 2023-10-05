@@ -1,0 +1,12 @@
+name: GoldmanLocks
+version: ${version}
+main: lee.code.locks.Locks
+api-version: 1.20
+author: Lee
+folia-supported: true
+depend: [GoldmanColors, GoldmanPlayerData]
+commands:
+  lock:
+    description: Maim lock command.
+    permission: locks.command.lock
+    usage: "/lock &f<options>"
