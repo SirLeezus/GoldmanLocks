@@ -9,6 +9,9 @@ import net.kyori.adventure.text.Component;
 public enum Lang {
   PREFIX("&4&lLocks &6➔ "),
   USAGE("&6&lUsage: &e{0}"),
+  ON("&2&lON"),
+  OFF("&c&lOFF"),
+  COMMAND_BYPASS_TOGGLE_SUCCESS("&aYou successfully toggled admin bypass {0}&a!"),
   COMMAND_LOCK_ADD_SUCCESS("&aYou successfully added the player &6{0} &ato the lock sign in front of you."),
   COMMAND_LOCK_REMOVE_SUCCESS("&aYou successfully removed the player &6{0} &afrom the lock sign in front of you."),
   COMMAND_SIGN_HELP_DIVIDER("&2▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"),

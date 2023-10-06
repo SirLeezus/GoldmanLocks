@@ -4,6 +4,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import lee.code.locks.commands.CommandManager;
 import lee.code.locks.commands.TabCompletion;
 import lee.code.locks.listeners.LockSignListener;
+import lee.code.locks.managers.BypassManager;
 import lombok.Getter;
 import me.lucko.commodore.CommodoreProvider;
 import me.lucko.commodore.file.CommodoreFileReader;
@@ -14,11 +15,13 @@ import java.io.IOException;
 public class Locks extends JavaPlugin {
   @Getter private Data data;
   @Getter private CommandManager commandManager;
+  @Getter private BypassManager bypassManager;
 
   @Override
   public void onEnable() {
     this.data = new Data();
     this.commandManager = new CommandManager(this);
+    this.bypassManager = new BypassManager();
 
     registerCommands();
     registerListeners();

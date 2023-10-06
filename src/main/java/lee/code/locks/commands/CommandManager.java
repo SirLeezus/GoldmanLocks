@@ -3,6 +3,7 @@ package lee.code.locks.commands;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import lee.code.locks.Locks;
 import lee.code.locks.commands.cmds.AddCMD;
+import lee.code.locks.commands.cmds.BypassCMD;
 import lee.code.locks.commands.cmds.RemoveCMD;
 import lee.code.locks.commands.cmds.SignHelpCMD;
 import lee.code.locks.lang.Lang;
@@ -35,6 +36,7 @@ public class CommandManager implements CommandExecutor {
     storeSubCommand(new AddCMD(locks));
     storeSubCommand(new RemoveCMD(locks));
     storeSubCommand(new SignHelpCMD(locks));
+    storeSubCommand(new BypassCMD(locks));
   }
 
   private void storeSubCommand(SubCommand subCommand) {

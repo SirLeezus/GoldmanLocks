@@ -95,9 +95,11 @@ public class LockSignListener implements Listener {
       final UUID ownerID = getLockOwner(sign);
       if (ownerID == null) return;
       if (!ownerID.equals(playerID)) {
-        e.setCancelled(true);
-        player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_SIGN_NOT_OWNER_BREAK.getComponent(null)));
-        return;
+        if (!locks.getBypassManager().isBypassing(playerID)) {
+          e.setCancelled(true);
+          player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_SIGN_NOT_OWNER_BREAK.getComponent(null)));
+          return;
+        }
       }
       if (!blockHasSign(block)) return;
       block.getWorld().playSound(block.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
@@ -107,9 +109,11 @@ public class LockSignListener implements Listener {
       final UUID ownerID = getLockOwner(sign);
       if (ownerID == null) return;
       if (!ownerID.equals(playerID)) {
-        e.setCancelled(true);
-        player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_SIGN_NOT_OWNER_BREAK.getComponent(null)));
-        return;
+        if (!locks.getBypassManager().isBypassing(playerID)) {
+          e.setCancelled(true);
+          player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_SIGN_NOT_OWNER_BREAK.getComponent(null)));
+          return;
+        }
       }
       block.getWorld().playSound(block.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
       player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.LOCK_SIGN_SIGN_BREAK_SUCCESS.getComponent(null)));
@@ -147,6 +151,7 @@ public class LockSignListener implements Listener {
       if (ownerID == null) return;
       if (ownerID.equals(playerID)) return;
       if (SignUtil.isTrusted(locks, sign, playerID)) return;
+      if (locks.getBypassManager().isBypassing(playerID)) return;
       e.setCancelled(true);
       player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_SIGN_NOT_OWNER_OPEN.getComponent(null)));
     }

@@ -6,7 +6,5 @@ lock {
     player brigadier:string single_word;
   }
   signhelp;
-  admin {
-    bypass;
-  }
+  bypass;
 }
