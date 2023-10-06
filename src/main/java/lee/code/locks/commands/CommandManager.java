@@ -3,6 +3,7 @@ package lee.code.locks.commands;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import lee.code.locks.Locks;
 import lee.code.locks.commands.cmds.AddCMD;
+import lee.code.locks.commands.cmds.RemoveCMD;
 import lee.code.locks.lang.Lang;
 import lombok.Getter;
 import lombok.NonNull;
@@ -12,7 +13,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,7 @@ public class CommandManager implements CommandExecutor {
 
   private void storeSubCommands() {
     storeSubCommand(new AddCMD(locks));
+    storeSubCommand(new RemoveCMD(locks));
   }
 
   private void storeSubCommand(SubCommand subCommand) {

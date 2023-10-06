@@ -10,6 +10,7 @@ public enum Lang {
   PREFIX("&4&lLocks &6➔ "),
   USAGE("&6&lUsage: &e{0}"),
   COMMAND_LOCK_ADD_SUCCESS("&aYou successfully added the player &6{0} &ato the lock sign in front of you."),
+  COMMAND_LOCK_REMOVE_SUCCESS("&aYou successfully removed the player &6{0} &afrom the lock sign in front of you."),
   LOCK_SIGN_TITLE("&4[&c&lLocked&4]"),
   LOCK_SIGN_CREATE_SUCCESS("&aYou successfully created a new lock sign!"),
   LOCK_SIGN_OWNER("{0}"),
@@ -28,9 +29,11 @@ public enum Lang {
   ERROR_ONE_COMMAND_AT_A_TIME("&cYou're currently processing another command, please wait for it to finish."),
   ERROR_NOT_CONSOLE_COMMAND("&cThis command does not work in console."),
   ERROR_NO_PLAYER_DATA("&cCould not find any player data for &6{0}&c."),
-  ERROR_LOCK_ADD_NOT_OWNER("&cOnly the owner of the lock sign can add trusted players."),
+  ERROR_LOCK_ADD_NOT_OWNER("&cOnly the owner of the sign lock can add trusted players."),
+  ERROR_LOCK_REMOVE_NOT_OWNER("&cOnly the owner of the sign lock can remove trusted players."),
   ERROR_LOCK_ADD_SELF("&cYou can't trust yourself to your own lock."),
-  ERROR_LOCK_ADD_NO_SIGN("&cCould not find lock sign in front of you."),
+  ERROR_LOCK_NO_SIGN("&cCould not find lock sign in front of you."),
+  ERROR_LOCK_REMOVE_NOT_TRUSTED("&cThe player &6{0} &cis not trusted to the sign lock in front of you."),
   ;
   @Getter
   private final String string;

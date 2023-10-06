@@ -1,6 +1,7 @@
 package lee.code.locks.utils;
 
 import lee.code.locks.Locks;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Sign;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -30,6 +31,18 @@ public class SignUtil {
     String trusted = getLockTrusted(locks, sign);
     if (!trusted.isEmpty()) trusted = trusted + "," + trusting;
     else trusted = trusting.toString();
+    final NamespacedKey trustedKey = new NamespacedKey(locks, "sign-lock-trusted");
+    signContainer.set(trustedKey, PersistentDataType.STRING, trusted);
+    sign.update(true, false);
+  }
+
+  public static void removeTrusted(Locks locks, Sign sign, UUID unTrust) {
+    final PersistentDataContainer signContainer = sign.getPersistentDataContainer();
+    String trusted = getLockTrusted(locks, sign);
+    final List<String> trustedList = new ArrayList<>(List.of(trusted.split(",")));
+    trustedList.remove(unTrust.toString());
+    if (trustedList.isEmpty()) trusted = "";
+    else trusted = StringUtils.join(trustedList, ",");
     final NamespacedKey trustedKey = new NamespacedKey(locks, "sign-lock-trusted");
     signContainer.set(trustedKey, PersistentDataType.STRING, trusted);
     sign.update(true, false);

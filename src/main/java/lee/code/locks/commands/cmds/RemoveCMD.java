@@ -17,30 +17,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AddCMD extends SubCommand {
+public class RemoveCMD extends SubCommand {
   private final Locks locks;
 
-  public AddCMD(Locks locks) {
+  public RemoveCMD(Locks locks) {
     this.locks = locks;
   }
   @Override
   public String getName() {
-    return "add";
+    return "remove";
   }
 
   @Override
   public String getDescription() {
-    return "Add a player to the sign lock you're looking at.";
+    return "Remove a trusted player from the sign lock you're looking at.";
   }
 
   @Override
   public String getSyntax() {
-    return "/lock add &f<player>";
+    return "/lock remove &f<player>";
   }
 
   @Override
   public String getPermission() {
-    return "lock.command.add";
+    return "lock.command.remove";
   }
 
   @Override
@@ -74,7 +74,7 @@ public class AddCMD extends SubCommand {
       return;
     }
     if (!ownerID.equals(player.getUniqueId())) {
-      player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_LOCK_ADD_NOT_OWNER.getComponent(null)));
+      player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_LOCK_REMOVE_NOT_OWNER.getComponent(null)));
       return;
     }
     final String targetString = args[1];
@@ -83,12 +83,12 @@ public class AddCMD extends SubCommand {
       player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_NO_PLAYER_DATA.getComponent(new String[]{targetString})));
       return;
     }
-    if (targetID.equals(player.getUniqueId())) {
-      player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_LOCK_ADD_SELF.getComponent(null)));
+    if (!SignUtil.isTrusted(locks, sign, targetID)) {
+      player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_LOCK_REMOVE_NOT_TRUSTED.getComponent(new String[]{ColorAPI.getNameColor(targetID, targetString)})));
       return;
     }
-    SignUtil.addTrusted(locks, sign, targetID);
-    player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.COMMAND_LOCK_ADD_SUCCESS.getComponent(new String[]{ColorAPI.getNameColor(targetID, targetString)})));
+    SignUtil.removeTrusted(locks, sign, targetID);
+    player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.COMMAND_LOCK_REMOVE_SUCCESS.getComponent(new String[]{ColorAPI.getNameColor(targetID, targetString)})));
   }
 
   @Override
