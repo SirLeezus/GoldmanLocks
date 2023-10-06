@@ -87,6 +87,11 @@ public class AddCMD extends SubCommand {
       player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_LOCK_ADD_SELF.getComponent(null)));
       return;
     }
+    final int maxTrusted = 25;
+    if (SignUtil.getTrustedTotal(locks, sign) + 1 > maxTrusted) {
+      player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.ERROR_LOCK_ADD_MAX.getComponent(null)));
+      return;
+    }
     SignUtil.addTrusted(locks, sign, targetID);
     player.sendMessage(Lang.PREFIX.getComponent(null).append(Lang.COMMAND_LOCK_ADD_SUCCESS.getComponent(new String[]{ColorAPI.getNameColor(targetID, targetString)})));
   }

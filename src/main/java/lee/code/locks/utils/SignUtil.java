@@ -54,4 +54,8 @@ public class SignUtil {
     final List<String> trustedList = new ArrayList<>(List.of(trusted.split(",")));
     return trustedList.contains(targetID.toString());
   }
+
+  public static int getTrustedTotal(Locks locks, Sign sign) {
+    return getLockTrusted(locks, sign).split(",").length;
+  }
 }

@@ -41,6 +41,7 @@ public enum Lang {
   ERROR_LOCK_ADD_NOT_OWNER("&cOnly the owner of the sign lock can add trusted players."),
   ERROR_LOCK_REMOVE_NOT_OWNER("&cOnly the owner of the sign lock can remove trusted players."),
   ERROR_LOCK_ADD_SELF("&cYou can't trust yourself to your own lock."),
+  ERROR_LOCK_ADD_MAX("&cThe sign lock in front of you has already reached the max amount of trusted players you can add."),
   ERROR_LOCK_NO_SIGN("&cCould not find lock sign in front of you."),
   ERROR_LOCK_REMOVE_NOT_TRUSTED("&cThe player &6{0} &cis not trusted to the sign lock in front of you."),
   ;
