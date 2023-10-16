@@ -16,6 +16,7 @@ import org.bukkit.Sound;
 import org.bukkit.block.*;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.type.WallSign;
+import org.bukkit.block.sign.Side;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -134,6 +135,7 @@ public class LockSignListener implements Listener {
       e.setCancelled(true);
       final String trustedPlayers = getTrustedPlayers(sign);
       if (trustedPlayers == null) return;
+      if (ownerID.equals(playerID)) updateSignNameColor(player, sign);
       Bukkit.getAsyncScheduler().runNow(locks, scheduledTask -> {
         final List<Component> lines = new ArrayList<>();
         lines.add(Lang.LOCK_INFO_TITLE.getComponent(null));
@@ -249,6 +251,11 @@ public class LockSignListener implements Listener {
       }
     }
     return null;
+  }
+
+  private void updateSignNameColor(Player player, Sign sign) {
+    sign.getSide(Side.FRONT).line(1, CoreUtil.parseColorComponent(ColorAPI.getNameColor(player.getUniqueId(), player.getName())));
+    sign.update(true, false);
   }
 
   private boolean blockHasSign(Block block) {
