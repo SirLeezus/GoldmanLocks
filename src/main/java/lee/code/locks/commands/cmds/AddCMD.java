@@ -40,7 +40,7 @@ public class AddCMD extends SubCommand {
 
   @Override
   public String getPermission() {
-    return "lock.command.add";
+    return "locks.command.add";
   }
 
   @Override

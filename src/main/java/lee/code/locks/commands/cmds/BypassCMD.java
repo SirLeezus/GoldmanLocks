@@ -36,7 +36,7 @@ public class BypassCMD extends SubCommand {
 
   @Override
   public String getPermission() {
-    return "lock.command.bypass";
+    return "locks.command.bypass";
   }
 
   @Override

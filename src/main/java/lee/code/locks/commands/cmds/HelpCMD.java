@@ -34,7 +34,7 @@ public class HelpCMD extends SubCommand {
 
   @Override
   public String getPermission() {
-    return "lock.command.help";
+    return "locks.command.help";
   }
 
   @Override

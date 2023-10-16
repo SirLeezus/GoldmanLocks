@@ -40,7 +40,7 @@ public class RemoveCMD extends SubCommand {
 
   @Override
   public String getPermission() {
-    return "lock.command.remove";
+    return "locks.command.remove";
   }
 
   @Override

@@ -33,7 +33,7 @@ public class SignHelpCMD extends SubCommand {
 
   @Override
   public String getPermission() {
-    return "lock.command.signhelp";
+    return "locks.command.signhelp";
   }
 
   @Override
