@@ -67,4 +67,12 @@ public class CoreUtil {
     if (index == -1) return input;
     else return input.substring(0, index);
   }
+
+  public static <K, V extends Comparable<? super V>> HashMap<K, V> sortByValue(Map<K, V> hm, Comparator<V> comparator) {
+    final HashMap<K, V> temp = new LinkedHashMap<>();
+    hm.entrySet().stream()
+      .sorted(Map.Entry.comparingByValue(comparator))
+      .forEachOrdered(entry -> temp.put(entry.getKey(), entry.getValue()));
+    return temp;
+  }
 }

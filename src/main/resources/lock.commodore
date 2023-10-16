@@ -7,4 +7,5 @@ lock {
   }
   signhelp;
   bypass;
+  help;
 }
